@@ -98,6 +98,6 @@ class JanssonConan(ConanFile):
         if self.settings.os == "Windows":
             self.cpp_info.libs = ['jansson']
             if self.settings.build_type == "Debug":
-                self.cpp_info.libs[0] += "d"
+                self.cpp_info.libs[0] += "_d"
         else:
             self.cpp_info.libs = ['jansson']
