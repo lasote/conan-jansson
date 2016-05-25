@@ -48,7 +48,7 @@ class JanssonConan(ConanFile):
                      
             configure = "cd %s && %s ./configure" % (self.ZIP_FOLDER_NAME, env_line)
             self.output.warn(configure)
-	    self.run(configure)
+            self.run(configure)
             self.run("cd %s && %s make" % (self.ZIP_FOLDER_NAME, env_line))
         else:
             conan_magic_lines = '''project(jansson)
@@ -60,11 +60,11 @@ class JanssonConan(ConanFile):
             replace_in_file("%s/CMakeLists.txt" % self.ZIP_FOLDER_NAME, "project(jansson C)", "")
             
             cmake = CMake(self.settings)
-            shared_options = "-DPNG_SHARED=ON -DPNG_STATIC=OFF" if self.options.shared else "-DPNG_SHARED=OFF -DPNG_STATIC=ON"
-            
+            shared_options = "-DJANSSON_BUILD_SHARED_LIBS=ON" if self.options.shared else "-DJANSSON_BUILD_SHARED_LIBS=OFF"
+            other_options = "-DJANSSON_BUILD_DOCS=OFF -DSTATIC_CRT=OFF -DJANSSON_STATIC_CRT=OFF"
             self.run("cd %s && mkdir _build" % self.ZIP_FOLDER_NAME)
             cd_build = "cd %s/_build" % self.ZIP_FOLDER_NAME
-            self.run('%s && cmake .. %s %s' % (cd_build, cmake.command_line, shared_options))
+            self.run('%s && cmake .. %s %s %s' % (cd_build, cmake.command_line, shared_options, other_options))
             self.run("%s && cmake --build . %s" % (cd_build, cmake.build_config))
                 
     def package(self):
