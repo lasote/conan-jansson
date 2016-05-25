@@ -97,5 +97,7 @@ class JanssonConan(ConanFile):
     def package_info(self):
         if self.settings.os == "Windows":
             self.cpp_info.libs = ['jansson']
+            if self.settings.build_type == "Debug":
+                self.cpp_info.libs[0] += "d"
         else:
             self.cpp_info.libs = ['jansson']
