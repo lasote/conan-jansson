@@ -59,6 +59,9 @@ class JanssonConan(ConanFile):
             replace_in_file("%s/CMakeLists.txt" % self.ZIP_FOLDER_NAME, "cmake_minimum_required(VERSION 2.4.4)", conan_magic_lines)
             replace_in_file("%s/CMakeLists.txt" % self.ZIP_FOLDER_NAME, "project(jansson C)", "")
             
+            if self.settings.os == "Windows" and self.settings.compiler == "Visual Studio" and self.settings.compiler.version==14:
+                replace_in_file("%s/CMakeLists.txt" % self.ZIP_FOLDER_NAME, "check_function_exists (snprintf HAVE_SNPRINTF)", "SET(HAVE_SNPRINTF 1)")
+            
             cmake = CMake(self.settings)
             shared_options = "-DJANSSON_BUILD_SHARED_LIBS=ON" if self.options.shared else "-DJANSSON_BUILD_SHARED_LIBS=OFF"
             other_options = "-DJANSSON_BUILD_DOCS=OFF"
