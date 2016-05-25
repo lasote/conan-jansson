@@ -61,7 +61,12 @@ class JanssonConan(ConanFile):
             
             cmake = CMake(self.settings)
             shared_options = "-DJANSSON_BUILD_SHARED_LIBS=ON" if self.options.shared else "-DJANSSON_BUILD_SHARED_LIBS=OFF"
-            other_options = "-DJANSSON_BUILD_DOCS=OFF -DSTATIC_CRT=OFF -DJANSSON_STATIC_CRT=OFF"
+            other_options = "-DJANSSON_BUILD_DOCS=OFF"
+            if str(self.settings.runtime) in ("MT", "MTd"):
+                other_options += " -DSTATIC_CRT=ON -DJANSSON_STATIC_CRT=ON"
+            else:
+                other_options += " -DSTATIC_CRT=OFF -DJANSSON_STATIC_CRT=OFF"
+                 
             self.run("cd %s && mkdir _build" % self.ZIP_FOLDER_NAME)
             cd_build = "cd %s/_build" % self.ZIP_FOLDER_NAME
             self.run('%s && cmake .. %s %s %s' % (cd_build, cmake.command_line, shared_options, other_options))
