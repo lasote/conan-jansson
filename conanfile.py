@@ -7,7 +7,7 @@ from conans import CMake
 
 class JanssonConan(ConanFile):
     name = "jansson"
-    version = "2.7"
+    version = "2.10"
     ZIP_FOLDER_NAME = "jansson-%s" % version
     generators = "cmake"
     settings = "os", "arch", "compiler", "build_type"
