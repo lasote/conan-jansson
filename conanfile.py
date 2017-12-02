@@ -7,7 +7,7 @@ from conans import CMake
 
 class JanssonConan(ConanFile):
     name = "jansson"
-    version = "2.7"
+    version = "2.10"
     ZIP_FOLDER_NAME = "jansson-%s" % version
     generators = "cmake"
     settings = "os", "arch", "compiler", "build_type"
@@ -56,8 +56,8 @@ class JanssonConan(ConanFile):
     include(../conanbuildinfo.cmake)
     CONAN_BASIC_SETUP()
     '''
-            replace_in_file("%s/CMakeLists.txt" % self.ZIP_FOLDER_NAME, "cmake_minimum_required(VERSION 2.4.4)", conan_magic_lines)
-            replace_in_file("%s/CMakeLists.txt" % self.ZIP_FOLDER_NAME, "project(jansson C)", "")
+            replace_in_file("%s/CMakeLists.txt" % self.ZIP_FOLDER_NAME, "cmake_minimum_required (VERSION 2.8)", conan_magic_lines)
+            replace_in_file("%s/CMakeLists.txt" % self.ZIP_FOLDER_NAME, "project (jansson C)", "")
             
             if self.settings.os == "Windows" and self.settings.compiler == "Visual Studio" and self.settings.compiler.version==14:
                 replace_in_file("%s/CMakeLists.txt" % self.ZIP_FOLDER_NAME, "check_function_exists (snprintf HAVE_SNPRINTF)", "SET(HAVE_SNPRINTF 1)")
